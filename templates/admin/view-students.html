@@ -1,0 +1,56 @@
+{% extends "admin/base.html" %}
+{% block title %}View All Students {% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+</style>
+{% endblock %}
+{% block content %}
+<div class="container border border-1 rounded-2">
+    <p class="fw-bold fs-4 mb-2 mt-2">View Students</p>
+    <div>{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning bg-warning text-light alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <table class="table table-striped table-hover" id="myTable" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone No</th>
+                <th>Email</th>
+                <th>View</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students: %}
+            <tr>
+                <td>{{s.id}}</td>
+                <td>{{s.name}}</td>
+                <td>{{s.phoneno}}</td>
+                <td>{{s.email}}</td>
+                <td>
+                    <a href="{{ url_for('admin.viewstudent',sid=s.id) }}" class="btn btn-sm btn-success">View</a>
+                </td>
+                <td>
+                    <a href="{{ url_for('admin.viewstudent',sid=s.id) }}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+{% endblock %}
